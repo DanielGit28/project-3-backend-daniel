@@ -12,7 +12,7 @@ const errorMiddleware = require("./middleware/error.middleware");
 const authenticateTokenMiddleware = require("./middleware/authenticate-token.middleware");
 
 const app = express();
-const appRouter = express.Router();
+
 
 mongoose
   .connect(process.env.DATABASE, {
@@ -32,6 +32,7 @@ const usersRouter = require("./routes/users.route");
 const cors = require("cors");
 app.use(cors());
 
+
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 
@@ -40,9 +41,9 @@ app.use(loggerMiddleware.loggerHandler);
 app.post("/*",postMiddleware.contentHandler)
 
 
-appRouter.get("/", (req, res, next) => {
+app.get("/", (req, res, next) => {
   res.send("Welcome to Daniel's backend server. Enjoy the api!")
-})
+});
 app.use("/users", usersRouter)
 app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
 app.use("/books",authenticateTokenMiddleware.authenticateToken, booksRouter);
