@@ -12,6 +12,7 @@ const errorMiddleware = require("./middleware/error.middleware");
 const authenticateTokenMiddleware = require("./middleware/authenticate-token.middleware");
 
 const app = express();
+const appRouter = express.Router();
 
 mongoose
   .connect(process.env.DATABASE, {
@@ -38,6 +39,10 @@ app.use(bp.urlencoded({ extended: true }));
 app.use(loggerMiddleware.loggerHandler);
 app.post("/*",postMiddleware.contentHandler)
 
+
+appRouter.get("/", (req, res, next) => {
+  res.send("Welcome to Daniel's backend server. Enjoy the api!")
+})
 app.use("/users", usersRouter)
 app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
 app.use("/books",authenticateTokenMiddleware.authenticateToken, booksRouter);
