@@ -26,9 +26,9 @@ mongoose
     console.log("Error connecting to mongo: ", err);
   });
 
-const authorsRouter = require("./routes/authors.route");
-const booksRouter = require("./routes/books.route");
-const usersRouter = require("./routes/users.route");
+
+const usersRouter = require("./routes/user.route");
+const imagesRouter = require("./routes/images.route");
 const cors = require("cors");
 app.use(cors());
 
@@ -42,11 +42,12 @@ app.post("/*",postMiddleware.contentHandler)
 
 
 app.get("/", (req, res, next) => {
-  res.send("Welcome to Daniel's backend server. Enjoy the api!")
+  res.send("Welcome to Daniel's backend server. Enjoy the api!");
 });
-app.use("/users", usersRouter)
-app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
-app.use("/books",authenticateTokenMiddleware.authenticateToken, booksRouter);
+app.use("/users", usersRouter);
+app.use("/images", imagesRouter);
+//app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
+
 
 
 app.use(errorMiddleware.errorHandler);

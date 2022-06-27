@@ -14,8 +14,8 @@ class UserService {
     return user;
   }
 
-  static async getUserByUsername(username) {
-    const user = await User.findOne({username: username});
+  static async getUserByEmail(email) {
+    const user = await User.findOne({email: email});
 
     return user;
   }
@@ -28,8 +28,8 @@ class UserService {
     return user;
   }
 
-  static async updateUser(id, newData) {
-    const updatedUser = await User.findByIdAndUpdate(id, newData, {
+  static async updateUser(email, newData) {
+    const updatedUser = await User.findOneAndUpdate({email: email}, newData, {
       returnDocument: "after",
       runValidators: true,
     });
@@ -37,8 +37,8 @@ class UserService {
     return updatedUser;
   }
 
-  static async deleteUser(id) {
-    const user = await User.findByIdAndDelete(id);
+  static async deleteUser(email) {
+    const user = await User.findOneAndDelete({email: email});
 
     return user;
   }

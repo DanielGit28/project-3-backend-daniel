@@ -6,6 +6,6 @@ process.env.TOKEN_SECRET;
 
 module.exports = {
     accessTokenGenerator: function (username) {
-        return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '30s' });
+        return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '35min' });
     }
 }
