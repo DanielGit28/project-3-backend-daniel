@@ -15,7 +15,7 @@ const app = express();
 
 
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
