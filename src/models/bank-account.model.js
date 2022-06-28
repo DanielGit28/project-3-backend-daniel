@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from"mongoose";
 
 const bankAccountSchema = new mongoose.Schema({
     accountNumber: {
@@ -38,4 +38,4 @@ const bankAccountSchema = new mongoose.Schema({
 
 const BankAccount = mongoose.model("BankAccount", bankAccountSchema);
 
-module.exports = BankAccount;
+export default BankAccount;

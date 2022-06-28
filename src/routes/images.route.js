@@ -1,7 +1,7 @@
-const express = require("express");
-const cloudinary = require("cloudinary").v2;
+import express from "express";
+import cloudinary from "cloudinary";
 const imageRouter = express.Router();
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
 dotenv.config();
 
 imageRouter
@@ -12,20 +12,20 @@ imageRouter
 
         try {
             cloudinary.uploader
-            .upload(imageData, {
-                resource_type: "image",
-            })
-            .then((result) => {
-                console.log("Image uploaded: ",result);
-                res.send(result.url);
-            })
-            .catch((error) => {
-                console.log("Error uploading image: ",error);
-                res.send(JSON.stringify(error));
-            })
+                .upload(imageData, {
+                    resource_type: "image",
+                })
+                .then((result) => {
+                    console.log("Image uploaded: ", result);
+                    res.send(result.url);
+                })
+                .catch((error) => {
+                    console.log("Error uploading image: ", error);
+                    res.send(JSON.stringify(error));
+                })
         } catch (err) {
             next(err);
         }
     });
 
-module.exports = imageRouter;
+export default imageRouter;

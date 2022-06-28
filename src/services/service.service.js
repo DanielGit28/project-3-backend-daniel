@@ -1,4 +1,5 @@
-const Service = require("../models/service.model");
+import Service from "../models/service.model.js";
+import AccountMovementService from "./account-movement.service.js";
 
 class ServiceService {
 
@@ -18,11 +19,21 @@ class ServiceService {
     }
 
     static async addService(ServiceData) {
-        const service = new Service(ServiceData);
+        let movement = {
+            originAccount: ServiceData.bankAccount,
+            currency: ServiceData.currency,
+            amount: ServiceData.amount,
+            movementType: "Service"
+        }
+        const movementResponse = await AccountMovementService.addAccountMovement(movement);
+        if (movementResponse === "Error on service: there are not enough funds on the account." || movementResponse === "Error on transfer: there are not enough funds on the account.") {
+            return movementResponse
+        } else {
+            const service = new Service(ServiceData);
+            await service.save();
+            return service;
+        }
 
-        await service.save();
-
-        return service;
     }
 
     static async updateService(id, newData) {
@@ -30,6 +41,13 @@ class ServiceService {
             returnDocument: "after",
             runValidators: true,
         });
+        let movement = {
+            originAccount: newData.bankAccount,
+            currency: newData.currency,
+            amount: newData.amount,
+            movementType: "Service"
+        }
+        await AccountMovementService.addAccountMovement(movement);
 
         return updatedService;
     }
@@ -39,6 +57,7 @@ class ServiceService {
 
         return service;
     }
+
 }
 
-module.exports = ServiceService;
+export default ServiceService;

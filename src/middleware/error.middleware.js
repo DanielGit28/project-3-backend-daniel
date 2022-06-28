@@ -1,8 +1,6 @@
-
-
-module.exports = {
-    errorHandler: function (err, req, res, next) {
-        console.log(err);
-       res.send(err._message);
-    }
+ function errorHandler(err, req, res, next) {
+    console.log(err);
+   res.send(err._message);
 }
+ 
+export default errorHandler;

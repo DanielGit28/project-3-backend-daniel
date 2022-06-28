@@ -1,5 +1,5 @@
-const express = require("express");
-const ServiceService = require("../services/bank-account.service");
+import express from"express";
+import ServiceService from"../services/service.service.js";
 const ServiceRouter = express.Router();
 
 //Get Services
@@ -64,4 +64,4 @@ ServiceRouter
     });
 
 
-module.exports = ServiceRouter;
+    export default ServiceRouter;

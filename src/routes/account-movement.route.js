@@ -1,6 +1,6 @@
-const express = require("express");
-const AccountMovementService = require("../services/account-movement.service");
-const BankAccountService = require("../services/bank-account.service");
+import express from"express";
+import AccountMovementService from"../services/account-movement.service.js";
+
 const AccountMovementRouter = express.Router();
 
 //Get AccountMovements
@@ -17,45 +17,7 @@ AccountMovementRouter
             if (AccountMovementData) {
                 //Movements post
                 const newAccountMovement = await AccountMovementService.addAccountMovement(AccountMovementData);
-
-                //REMAINING: check if is same currency
-
-                //Accounts
-                let originAccount = await BankAccountService.getBankAccountByNumber(AccountMovementData.originAccount);
-                if (originAccount) {
-                    //Money insertion updates origin balance
-                    if (AccountMovementData.movementType === "Money insertion") {
-                        await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance + AccountMovementData.amount });
-                        //Send movement once finalized the account update
-                        res.send(newAccountMovement);
-                    } else {
-                        res.send("No movement type specified");
-                    }
-                    //Service updates origin balance
-                    //Service payments need to action an account movement and a service post or put for the service state of the user
-                    if ( AccountMovementData.movementType === "Service") {
-                        await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance - AccountMovementData.amount });
-                        //Send movement once finalized the account update
-                        res.send(newAccountMovement);
-                    } else {
-                        res.send("No movement type specified");
-                    }
-                    //Money transfer updates origin and destination accounts 
-                    if (AccountMovementData.movementType === "Money transfer" && AccountMovementData.destinationAccount) {
-                        //Origin
-                        await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance - AccountMovementData.amount });
-                        //Destination
-                        let destinationAccount = await BankAccountService.getBankAccountByNumber(AccountMovementData.destinationAccount);
-                        await BankAccountService.updateBankAccount(destinationAccount.accountNumber, { accountBalance: destinationAccount.accountBalance + AccountMovementData.amount });
-                        //Send movement once finalized the account update
-                        res.send(newAccountMovement);
-                    } else {
-                        res.send("No destination account or movement type specified");
-                    }
-                } else {
-                    res.send("Movement origin account not found");
-                }
-                
+                res.send(newAccountMovement);
             }
         } catch (err) {
             next(err);
@@ -111,4 +73,4 @@ AccountMovementRouter
         !deletedAccountMovement ? res.sendStatus(404) : res.json(deletedAccountMovement);
     });
 
-module.exports = AccountMovementRouter;
+export default AccountMovementRouter;

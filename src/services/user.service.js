@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+import User from "../models/user.model.js";
 
 class UserService {
 
@@ -44,4 +44,4 @@ class UserService {
   }
 }
 
-module.exports = UserService;
+export default UserService;

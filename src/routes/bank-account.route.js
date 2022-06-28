@@ -1,5 +1,5 @@
-const express = require("express");
-const BankAccountService = require("../services/bank-account.service");
+import express from"express";
+import BankAccountService from"../services/bank-account.service.js";
 const BankAccountRouter = express.Router();
 
 //Get BankAccounts
@@ -65,4 +65,4 @@ BankAccountRouter
         !deletedBankAccount ? res.sendStatus(404) : res.json(deletedBankAccount);
     });
 
-module.exports = BankAccountRouter;
+export default BankAccountRouter;

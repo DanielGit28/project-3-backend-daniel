@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from"mongoose";
 
 const accountMovementSchema = new mongoose.Schema({
     originAccount: {
@@ -46,4 +46,4 @@ const accountMovementSchema = new mongoose.Schema({
 
 const AccountMovement = mongoose.model("AccountMovement", accountMovementSchema);
 
-module.exports = AccountMovement;
+export default AccountMovement;

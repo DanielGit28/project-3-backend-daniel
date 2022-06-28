@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const serviceSchema = new mongoose.Schema({
     bankAccount: {
@@ -11,7 +11,14 @@ const serviceSchema = new mongoose.Schema({
         },
         required: [true, "Bank account required for service"],
     },
-    ammount: {
+    currency: {
+        type: String,
+        enum: ["Dolar", "Colon", "Euro"],
+        default: "Colon",
+        message: "{VALUE} is not supported",
+        required: [true, "Currency required"]
+    },
+    amount: {
         type: Number, required: [true, "Amount for service is required"], default: 0, minlength: [1, "Ammount must be greater or equal to 1."]
     },
     serviceType: {
@@ -45,4 +52,4 @@ const serviceSchema = new mongoose.Schema({
 
 const Service = mongoose.model("Service", serviceSchema);
 
-module.exports = Service;
+export default Service;

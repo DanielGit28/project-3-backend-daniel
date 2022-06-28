@@ -1,4 +1,4 @@
-const BankAccount = require("../models/bank-account.model");
+import BankAccount from"../models/bank-account.model.js";
 
 class BankAccountService {
 
@@ -45,4 +45,4 @@ class BankAccountService {
     }
 }
 
-module.exports = BankAccountService;
+export default BankAccountService;

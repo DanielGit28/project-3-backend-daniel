@@ -1,8 +1,8 @@
-const express = require("express");
-const bcrypt = require("bcrypt");
-const UserService = require("../services/user.service");
-const BankAccountService = require("../services/bank-account.service");
-const tokenHelper = require("../helpers/token.helper");
+import express from"express";
+import bcrypt from"bcrypt";
+import UserService from"../services/user.service.js";
+import BankAccountService from"../services/bank-account.service.js";
+import tokenHelper from"../helpers/token.helper.js";
 const userRouter = express.Router();
 
 //Get users
@@ -104,4 +104,4 @@ userRouter
     });
 
 
-module.exports = userRouter;
+    export default userRouter;

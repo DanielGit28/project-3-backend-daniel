@@ -1,11 +1,12 @@
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
+import jwt from"jsonwebtoken";
+import dotenv from"dotenv";
 
 dotenv.config();
 process.env.TOKEN_SECRET;
 
-module.exports = {
-    accessTokenGenerator: function (username) {
-        return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '35min' });
-    }
+function accessTokenGenerator(username) {
+    return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '35min' });
 }
+
+export default accessTokenGenerator;
+    

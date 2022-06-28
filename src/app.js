@@ -1,15 +1,15 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const bp = require('body-parser');
-const dotenv = require("dotenv");
+import express from "express";
+import mongoose from "mongoose";
+import bp from "body-parser";
+import dotenv from "dotenv";
 
 dotenv.config();
 
 
-const loggerMiddleware = require("./middleware/logger.middleware");
-const postMiddleware = require("./middleware/content-type.middleware");
-const errorMiddleware = require("./middleware/error.middleware");
-const authenticateTokenMiddleware = require("./middleware/authenticate-token.middleware");
+import loggerMiddleware from "./middleware/logger.middleware.js";
+import postMiddleware from "./middleware/content-type.middleware.js";
+import errorMiddleware from "./middleware/error.middleware.js";
+import authenticateTokenMiddleware from "./middleware/authenticate-token.middleware.js";
 
 const app = express();
 
@@ -27,13 +27,13 @@ mongoose
   });
 
 
-const usersRouter = require("./routes/user.route");
-const imagesRouter = require("./routes/images.route");
-const bankAccountsRouter = require("./routes/bank-account.route");
-const accountMovementsRouter = require("./routes/account-movement.route");
-const servicesRouter = require("./routes/service.route");
+import usersRouter from "./routes/user.route.js";
+import imagesRouter from "./routes/images.route.js";
+import bankAccountsRouter from "./routes/bank-account.route.js";
+import accountMovementsRouter from "./routes/account-movement.route.js";
+import servicesRouter from "./routes/service.route.js";
 
-const cors = require("cors");
+import cors from "cors";
 app.use(cors());
 
 
@@ -41,8 +41,8 @@ app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
 
 //Custom middlewares
-app.use(loggerMiddleware.loggerHandler);
-app.post("/*",postMiddleware.contentHandler)
+app.use(loggerMiddleware);
+app.post("/*", postMiddleware)
 
 
 app.get("/", (req, res, next) => {
@@ -55,7 +55,7 @@ app.use("/movements", accountMovementsRouter);
 app.use("/services", servicesRouter);
 //app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
 
-app.use(errorMiddleware.errorHandler);
+app.use(errorMiddleware);
 //console.log(require('crypto').randomBytes(64).toString('hex'));
 
-module.exports = app;
+export default app;
