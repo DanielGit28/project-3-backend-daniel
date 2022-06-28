@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const UserService = require("../services/user.service");
+const BankAccountService = require("../services/bank-account.service");
 const tokenHelper = require("../helpers/token.helper");
 const userRouter = express.Router();
 
@@ -25,6 +26,19 @@ userRouter
                 const salt = await bcrypt.genSalt(10);
                 userData.password = await bcrypt.hash(userData.password, salt);
                 const newUser = await UserService.addUser(userData);
+                let IBANNumberColones = "CR6101001" + Math.floor(Math.pow(10, 13 - 1) + Math.random() * 9 * Math.pow(10, 13 - 1));
+                let colonesAccount = {
+                    accountNumber: IBANNumberColones,
+                    user: userData.email
+                };
+                await BankAccountService.addBankAccount(colonesAccount);
+                let IBANNumberDolares = "CR6101002" + Math.floor(Math.pow(10, 13 - 1) + Math.random() * 9 * Math.pow(10, 13 - 1));
+                let dolaresAccount = {
+                    accountNumber: IBANNumberDolares,
+                    user: userData.email,
+                    currency: "Dolar"
+                };
+                await BankAccountService.addBankAccount(dolaresAccount);
                 res.send(newUser);
             }
         } catch (err) {

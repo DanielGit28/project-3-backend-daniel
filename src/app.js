@@ -29,6 +29,10 @@ mongoose
 
 const usersRouter = require("./routes/user.route");
 const imagesRouter = require("./routes/images.route");
+const bankAccountsRouter = require("./routes/bank-account.route");
+const accountMovementsRouter = require("./routes/account-movement.route");
+const servicesRouter = require("./routes/service.route");
+
 const cors = require("cors");
 app.use(cors());
 
@@ -46,9 +50,10 @@ app.get("/", (req, res, next) => {
 });
 app.use("/users", usersRouter);
 app.use("/images", imagesRouter);
+app.use("/bank-accounts", bankAccountsRouter);
+app.use("/movements", accountMovementsRouter);
+app.use("/services", servicesRouter);
 //app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
-
-
 
 app.use(errorMiddleware.errorHandler);
 //console.log(require('crypto').randomBytes(64).toString('hex'));
