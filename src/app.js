@@ -34,13 +34,13 @@ import accountMovementsRouter from "./routes/account-movement.route.js";
 import servicesRouter from "./routes/service.route.js";
 
 import cors from "cors";
+/*
 const corsOptions ={
   origin:'http://localhost:3000', 
   credentials:true,
 }
-
 app.use(cors(corsOptions));
-
+*/
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
