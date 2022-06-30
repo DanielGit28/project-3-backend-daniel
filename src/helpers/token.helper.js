@@ -4,9 +4,9 @@ import dotenv from"dotenv";
 dotenv.config();
 process.env.TOKEN_SECRET;
 
-function accessTokenGenerator(username) {
+function tokenHelper(username) {
     return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '35min' });
 }
 
-export default accessTokenGenerator;
+export default tokenHelper;
     

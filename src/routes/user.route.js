@@ -90,7 +90,7 @@ userRouter
             if (user) {
                 const validPassword = await bcrypt.compare(password, user.password);
                 if (validPassword) {
-                    const token = tokenHelper.accessTokenGenerator({ username: userName });
+                    const token = tokenHelper({ username: userName });
                     res.json(token);
                 } else {
                     res.json({ error: "Invalid Password" });

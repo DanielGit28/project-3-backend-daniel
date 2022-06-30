@@ -1,22 +1,22 @@
-import jwt from"jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 
-     function authenticateToken(req, res, next) {
-        console.log("auth middleware");
-        console.log("Headers: ", req.headers);
-        const authHeader = req.headers['authorization']
-        const token = authHeader && authHeader.split(' ')[1]
+function authenticateTokenMiddleware(req, res, next) {
+    console.log("auth middleware");
+    console.log("Headers: ", req.headers);
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
 
-        if (token == null) return res.sendStatus(401)
+    if (token === null) return res.sendStatus(401)
 
-        jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-            console.log(err)
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+        console.log(err)
 
-            if (err) return res.json("Token not valid");
+        if (err) return res.json("Token not valid");
 
-            req.user = user
+        req.user = user
 
-            next()
-        })
-    }
-export default authenticateToken;
+        next()
+    })
+}
+export default authenticateTokenMiddleware;

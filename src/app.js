@@ -54,11 +54,11 @@ app.post("/*", postMiddleware)
 app.get("/", (req, res, next) => {
   res.send("Welcome to Daniel's backend server. Enjoy the api!");
 });
-app.use("/users",authenticateTokenMiddleware.authenticateToken, usersRouter);
+app.use("/users",authenticateTokenMiddleware, usersRouter);
 app.use("/images", imagesRouter);
-app.use("/bank-accounts",authenticateTokenMiddleware.authenticateToken, bankAccountsRouter);
-app.use("/movements",authenticateTokenMiddleware.authenticateToken, accountMovementsRouter);
-app.use("/services",authenticateTokenMiddleware.authenticateToken, servicesRouter);
+app.use("/bank-accounts",authenticateTokenMiddleware, bankAccountsRouter);
+app.use("/movements",authenticateTokenMiddleware, accountMovementsRouter);
+app.use("/services",authenticateTokenMiddleware, servicesRouter);
 //app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
 
 app.use(errorMiddleware);
