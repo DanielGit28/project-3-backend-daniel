@@ -51,6 +51,10 @@ app.use(loggerMiddleware);
 app.post("/*", postMiddleware)
 
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.get("/", (req, res, next) => {
   res.send("Welcome to Daniel's backend server. Enjoy the api!");
 });
