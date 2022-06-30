@@ -3,13 +3,14 @@ import bcrypt from"bcrypt";
 import UserService from"../services/user.service.js";
 import BankAccountService from"../services/bank-account.service.js";
 import tokenHelper from"../helpers/token.helper.js";
+import authenticateTokenMiddleware from "../middleware/authenticate-token.middleware.js";
 const userRouter = express.Router();
 
 //Get users
 userRouter
     .route("/info")
     // Get all Users
-    .get(async (req, res) => {
+    .get(authenticateTokenMiddleware, async (req, res) => {
         const users = await UserService.getAllUsers();
 
         res.json(users);
@@ -49,7 +50,7 @@ userRouter
 userRouter
     .route("/:email")
     // Get single user
-    .get(async (req, res) => {
+    .get(authenticateTokenMiddleware, async (req, res) => {
         const userEmail = req.params.email;
         const user = await UserService.getUserByEmail(userEmail);
         !user ? res.sendStatus(404) : res.json(user);
