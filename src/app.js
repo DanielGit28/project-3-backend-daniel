@@ -46,12 +46,13 @@ app.use(bp.urlencoded({ extended: true }));
 app.use(loggerMiddleware);
 app.post("/*", postMiddleware)
 
-
+/*
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Credentials', true);
   next();
 });
+*/
 app.get("/", (req, res, next) => {
   res.send("Welcome to Daniel's backend server. Enjoy the api!");
 });
