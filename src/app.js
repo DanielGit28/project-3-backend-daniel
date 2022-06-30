@@ -34,7 +34,13 @@ import accountMovementsRouter from "./routes/account-movement.route.js";
 import servicesRouter from "./routes/service.route.js";
 
 import cors from "cors";
-app.use(cors());
+const corsOptions ={
+  origin:'*', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions));
 
 
 app.use(bp.json());
