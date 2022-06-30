@@ -12,7 +12,7 @@ import jwt from"jsonwebtoken";
         jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
             console.log(err)
 
-            if (err) return res.json("Session expired")
+            if (err) return res.json("Token not valid");
 
             req.user = user
 
