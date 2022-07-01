@@ -61,7 +61,7 @@ app.use(bp.urlencoded({ extended: true }));
 
 //Custom middlewares
 app.use(loggerMiddleware);
-app.post("/*", postMiddleware);
+//app.post("/*", postMiddleware);
 
 
 
