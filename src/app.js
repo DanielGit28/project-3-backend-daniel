@@ -43,7 +43,18 @@ var corsOptions = {
 app.use(cors(corsOptions));
 */
 //app.options('*', cors());
-
+const whitelist = ["http://localhost:3000","https://project-3-frontend-daniel.herokuapp.com"]
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  credentials: true,
+}
+app.use(cors(corsOptions))
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
@@ -71,13 +82,7 @@ app.use("/services", authenticateTokenMiddleware, servicesRouter);
 //app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
 
 app.use(errorMiddleware);
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", ["http://localhost:3000","https://project-3-frontend-daniel.herokuapp.com/"]);
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Origin,Accept, Content-Type");
-  next()
-});
+
 //console.log(require('crypto').randomBytes(64).toString('hex'));
 
 export default app;
