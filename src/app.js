@@ -34,12 +34,15 @@ import accountMovementsRouter from "./routes/account-movement.route.js";
 import servicesRouter from "./routes/service.route.js";
 
 import cors from "cors";
+/*
 var corsOptions = {
   origin: ['http://localhost:3000', 'https://project-3-backend-daniel.herokuapp.com/','https://project-3-frontend-daniel.herokuapp.com/'],
   credentials: true,
 };
 
 app.use(cors(corsOptions));
+*/
+app.options('*', cors());
 
 
 app.use(bp.json());
