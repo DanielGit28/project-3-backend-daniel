@@ -85,8 +85,10 @@ userRouter
     .post(async (req, res) => {
         const userName = req.body.username;
         const password = req.body.password;
+        //console.log(req);
+        console.log(userName, password);
         if (userName && password) {
-            const user = await UserService.getUserByUsername(userName);
+            const user = await UserService.getUserByEmail(userName);
 
             if (user) {
                 const validPassword = await bcrypt.compare(password, user.password);
