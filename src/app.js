@@ -34,13 +34,13 @@ import accountMovementsRouter from "./routes/account-movement.route.js";
 import servicesRouter from "./routes/service.route.js";
 
 import cors from "cors";
-/*
-const corsOptions ={
-  origin:'http://localhost:3000', 
-  credentials:true,
-}
+var corsOptions = {
+  origin: ['http://localhost:3000', 'https://project-3-backend-daniel.herokuapp.com/','https://project-3-frontend-daniel.herokuapp.com/'],
+  credentials: true,
+};
+
 app.use(cors(corsOptions));
-*/
+
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
@@ -61,9 +61,9 @@ app.get("/", (req, res, next) => {
 });
 app.use("/users", usersRouter);
 app.use("/images", imagesRouter);
-app.use("/bank-accounts",authenticateTokenMiddleware, bankAccountsRouter);
-app.use("/movements",authenticateTokenMiddleware, accountMovementsRouter);
-app.use("/services",authenticateTokenMiddleware, servicesRouter);
+app.use("/bank-accounts", authenticateTokenMiddleware, bankAccountsRouter);
+app.use("/movements", authenticateTokenMiddleware, accountMovementsRouter);
+app.use("/services", authenticateTokenMiddleware, servicesRouter);
 //app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
 
 app.use(errorMiddleware);
