@@ -54,7 +54,7 @@ const corsOptions = {
   },
   credentials: true,
 }
-app.use(cors(corsOptions))
+app.use(cors());
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true }));
@@ -64,13 +64,14 @@ app.use(loggerMiddleware);
 app.post("/*", postMiddleware);
 
 
-/*
+
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', ['http://localhost:3000','http://localhost:3000/']);
+  
+  //res.header('Access-Control-Allow-Credentials', true);
   next();
 });
-*/
+
 app.get("/", (req, res, next) => {
   res.send("Welcome to Daniel's backend server. Enjoy the api!");
 });
