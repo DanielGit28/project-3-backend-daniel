@@ -52,13 +52,7 @@ app.use(bp.urlencoded({ extended: true }));
 app.use(loggerMiddleware);
 app.post("/*", postMiddleware);
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-  next()
-})
+
 /*
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -77,6 +71,13 @@ app.use("/services", authenticateTokenMiddleware, servicesRouter);
 //app.use("/authors",authenticateTokenMiddleware.authenticateToken,authorsRouter);
 
 app.use(errorMiddleware);
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", ["http://localhost:3000","https://project-3-frontend-daniel.herokuapp.com/"]);
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Origin,Accept, Content-Type");
+  next()
+});
 //console.log(require('crypto').randomBytes(64).toString('hex'));
 
 export default app;
