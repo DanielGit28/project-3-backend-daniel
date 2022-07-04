@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
     fullName: { type: String, required: [true, "User full name required"] },
     id: {
         type: Number, required: [true, "User id required"], minlength: [9, "Id must be 9 numbers"],
-        maxlength: 9, unique: [true, "User id must be unique"]
+        maxlength: 9
     },
     photoId: { type: String, required: [true, "User photo url required"]},
     incomeSource: {
