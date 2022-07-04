@@ -80,7 +80,7 @@ class AccountMovementService {
                     await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance + amountInserted });
                     return "Money insertion movement success.";
                 } else if(AccountMovementData.currency === originAccount.currency ) {
-                    let amountInserted = AccountMovementData.amount;
+                    let amountInserted = Number(AccountMovementData.amount);
                     await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance + amountInserted });
                     return "Money insertion movement success.";
                 }

@@ -1,6 +1,5 @@
-import express from"express";
-import AccountMovementService from"../services/account-movement.service.js";
-import BankAccountService from "../services/bank-account.service.js";
+import express from "express";
+import AccountMovementService from "../services/account-movement.service.js";
 
 const AccountMovementRouter = express.Router();
 
@@ -17,10 +16,8 @@ AccountMovementRouter
         try {
             if (AccountMovementData) {
                 //Movements post
-                let originAccount = await BankAccountService.getBankAccountByNumber(AccountMovementData.originAccount);
                 const newAccountMovement = await AccountMovementService.addAccountMovement(AccountMovementData);
-                let responseObject = {account: originAccount, movement: AccountMovementData, newMovement: newAccountMovement};
-                res.json(responseObject);
+                res.send(newAccountMovement);
             }
         } catch (err) {
             next(err);
