@@ -79,7 +79,7 @@ class AccountMovementService {
                     let amountInserted = AccountMovementData.amount / dolarChange.venta;
                     await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance + amountInserted });
                     return "Money insertion movement success.";
-                } else {
+                } else if(AccountMovementData.currency === originAccount.currency ) {
                     await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance + AccountMovementData.amount });
                     return "Money insertion movement success.";
                 }
