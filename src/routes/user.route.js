@@ -33,13 +33,13 @@ userRouter
                     user: userData.email
                 };
                 await BankAccountService.addBankAccount(colonesAccount);
-                let IBANNumberDolares = "CR6101002" + Math.floor(Math.pow(10, 13 - 1) + Math.random() * 9 * Math.pow(10, 13 - 1));
-                let dolaresAccount = {
-                    accountNumber: IBANNumberDolares,
+                let IBANNumberDollars = "CR6101002" + Math.floor(Math.pow(10, 13 - 1) + Math.random() * 9 * Math.pow(10, 13 - 1));
+                let dollarsAccount = {
+                    accountNumber: IBANNumberDollars,
                     user: userData.email,
-                    currency: "Dolar"
+                    currency: "Dollar"
                 };
-                await BankAccountService.addBankAccount(dolaresAccount);
+                await BankAccountService.addBankAccount(dollarsAccount);
                 res.send(newUser);
             }
         } catch (err) {

@@ -23,7 +23,7 @@ const accountMovementSchema = new mongoose.Schema({
     },
     currency: {
         type: String,
-        enum: ["Dolar", "Colon", "Euro"],
+        enum: ["Dollar", "Colon", "Euro"],
         default: "Colon",
         message: "{VALUE} is not supported",
         required: [true, "Currency required"]

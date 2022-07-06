@@ -53,30 +53,30 @@ class AccountMovementService {
     //Controller for the three types of money movements
     static async updateBankAccount(AccountMovementData) {
         let originAccount = await BankAccountService.getBankAccountByNumber(AccountMovementData.originAccount);
-        let dolarChange = await this.getDolarChange();
+        let dollarChange = await this.getDollarChange();
         if (originAccount) {
             //Money insertion updates origin balance
             if (AccountMovementData.movementType === "Money insertion") {
-                return await this.updateBankAccountInsertion(AccountMovementData, originAccount, dolarChange);
+                return await this.updateBankAccountInsertion(AccountMovementData, originAccount, dollarChange);
             } else if (AccountMovementData.movementType === "Service") {
-                return await this.updateBankAccountService(AccountMovementData, originAccount, dolarChange);
+                return await this.updateBankAccountService(AccountMovementData, originAccount, dollarChange);
             } else if (AccountMovementData.movementType === "Money transfer" && AccountMovementData.destinationAccount) {
-                return await this.updateBankAccountTransfer(AccountMovementData, originAccount, dolarChange);
+                return await this.updateBankAccountTransfer(AccountMovementData, originAccount, dollarChange);
             }
         }
     }
     //Money insertion
-    static async updateBankAccountInsertion(AccountMovementData, originAccount, dolarChange) {
-        console.log(dolarChange);
+    static async updateBankAccountInsertion(AccountMovementData, originAccount, dollarChange) {
+        console.log(dollarChange);
         if (originAccount) {
             //Money insertion updates origin balance
             if (AccountMovementData.movementType === "Money insertion") {
-                if (AccountMovementData.currency === "Dolar" && originAccount.currency === "Colon") {
-                    let amountInserted = AccountMovementData.amount * dolarChange.compra;
+                if (AccountMovementData.currency === "Dollar" && originAccount.currency === "Colon") {
+                    let amountInserted = AccountMovementData.amount * dollarChange.compra;
                     await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance + amountInserted });
                     return "Money insertion movement success.";
-                } if (AccountMovementData.currency === "Colon" && originAccount.currency === "Dolar") {
-                    let amountInserted = AccountMovementData.amount / dolarChange.venta;
+                } if (AccountMovementData.currency === "Colon" && originAccount.currency === "Dollar") {
+                    let amountInserted = AccountMovementData.amount / dollarChange.venta;
                     await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance + amountInserted });
                     return "Money insertion movement success.";
                 } else if(AccountMovementData.currency === originAccount.currency ) {
@@ -89,15 +89,15 @@ class AccountMovementService {
     }
 
     //Money service payment
-    static async updateBankAccountService(AccountMovementData, originAccount, dolarChange) {
+    static async updateBankAccountService(AccountMovementData, originAccount, dollarChange) {
         if (originAccount) {
             try {
                 //Service updates origin balance
                 //Service payments need to action an account movement and a service post or put for the service state of the user
                 if (AccountMovementData.movementType === "Service") {
-                    if (AccountMovementData.currency === "Dolar" && originAccount.currency === "Colon") {
-                        if (originAccount.accountBalance > AccountMovementData.amount * dolarChange.compra) {
-                            let amountInserted = AccountMovementData.amount * dolarChange.compra;
+                    if (AccountMovementData.currency === "Dollar" && originAccount.currency === "Colon") {
+                        if (originAccount.accountBalance > AccountMovementData.amount * dollarChange.compra) {
+                            let amountInserted = AccountMovementData.amount * dollarChange.compra;
                             await BankAccountService.updateBankAccount(originAccount.accountNumber, {
                                 accountBalance: originAccount.accountBalance - amountInserted
                             });
@@ -106,9 +106,9 @@ class AccountMovementService {
                             throw "Error on service: there are not enough funds on the account."
                         }
 
-                    } if (AccountMovementData.currency === "Colon" && originAccount.currency === "Dolar") {
-                        if (originAccount.accountBalance > AccountMovementData.amount / dolarChange.venta) {
-                            let amountInserted = AccountMovementData.amount / dolarChange.venta;
+                    } if (AccountMovementData.currency === "Colon" && originAccount.currency === "Dollar") {
+                        if (originAccount.accountBalance > AccountMovementData.amount / dollarChange.venta) {
+                            let amountInserted = AccountMovementData.amount / dollarChange.venta;
                             await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance - amountInserted });
                             return "Service movement success.";
                         } else {
@@ -128,30 +128,30 @@ class AccountMovementService {
         }
     }
     //Money transfer
-    static async updateBankAccountTransfer(AccountMovementData, originAccount, dolarChange) {
+    static async updateBankAccountTransfer(AccountMovementData, originAccount, dollarChange) {
         if (originAccount) {
             try {
                 //Money transfer updates origin and destination accounts 
                 if (AccountMovementData.movementType === "Money transfer" && AccountMovementData.destinationAccount) {
-                    if (AccountMovementData.currency === "Dolar" && originAccount.currency === "Colon") {
-                        if (originAccount.accountBalance > AccountMovementData.amount * dolarChange.compra) {
+                    if (AccountMovementData.currency === "Dollar" && originAccount.currency === "Colon") {
+                        if (originAccount.accountBalance > AccountMovementData.amount * dollarChange.compra) {
                             //Origin
-                            let amountInserted = AccountMovementData.amount * dolarChange.compra;
+                            let amountInserted = AccountMovementData.amount * dollarChange.compra;
                             await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance - amountInserted });
                             //Destination
-                            await this.destinationAccountUpdate(AccountMovementData,dolarChange);
+                            await this.destinationAccountUpdate(AccountMovementData,dollarChange);
                             return "Transfer movement success.";
                         } else {
                             throw "Error on transfer: there are not enough funds on the account."
                         }
 
-                    } if (AccountMovementData.currency === "Colon" && originAccount.currency === "Dolar") {
-                        if (originAccount.accountBalance > AccountMovementData.amount / dolarChange.venta) {
+                    } if (AccountMovementData.currency === "Colon" && originAccount.currency === "Dollar") {
+                        if (originAccount.accountBalance > AccountMovementData.amount / dollarChange.venta) {
                             //Origin
-                            let amountInserted = AccountMovementData.amount / dolarChange.venta;
+                            let amountInserted = AccountMovementData.amount / dollarChange.venta;
                             await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance - amountInserted });
                             //Destination
-                            await this.destinationAccountUpdate(AccountMovementData.dolarChange);
+                            await this.destinationAccountUpdate(AccountMovementData.dollarChange);
                             return "Transfer movement success.";
                         } else {
                             throw "Error on transfer: there are not enough funds on the account."
@@ -160,7 +160,7 @@ class AccountMovementService {
                         //Origin
                         await BankAccountService.updateBankAccount(originAccount.accountNumber, { accountBalance: originAccount.accountBalance - AccountMovementData.amount });
                         //Destination
-                        await this.destinationAccountUpdate(AccountMovementData,dolarChange);
+                        await this.destinationAccountUpdate(AccountMovementData,dollarChange);
                         return "Transfer movement success.";
                     } else {
                         throw "Error on transfer: there are not enough funds on the account."
@@ -174,23 +174,23 @@ class AccountMovementService {
         }
     }
 
-    static async destinationAccountUpdate(AccountMovementData, dolarChange) {
+    static async destinationAccountUpdate(AccountMovementData, dollarChange) {
         //Destination
         let destinationAccount = await BankAccountService.getBankAccountByNumber(AccountMovementData.destinationAccount);
-        if (AccountMovementData.currency === "Dolar" && destinationAccount.currency === "Colon") {
-            let amountInserted = AccountMovementData.amount * dolarChange.compra;
+        if (AccountMovementData.currency === "Dollar" && destinationAccount.currency === "Colon") {
+            let amountInserted = AccountMovementData.amount * dollarChange.compra;
             await BankAccountService.updateBankAccount(destinationAccount.accountNumber, { accountBalance: destinationAccount.accountBalance + amountInserted });
         } else
-            if (AccountMovementData.currency === "Colon" && destinationAccount.currency === "Dolar") {
-                let amountInserted = AccountMovementData.amount / dolarChange.venta;
+            if (AccountMovementData.currency === "Colon" && destinationAccount.currency === "Dollar") {
+                let amountInserted = AccountMovementData.amount / dollarChange.venta;
                 await BankAccountService.updateBankAccount(destinationAccount.accountNumber, { accountBalance: destinationAccount.accountBalance + amountInserted });
             } else {
                 await BankAccountService.updateBankAccount(destinationAccount.accountNumber, { accountBalance: destinationAccount.accountBalance + AccountMovementData.amount });
             }
     }
 
-    //Gets the dolar change everyday from the CENTRAL BANK
-    static async getDolarChange() {
+    //Gets the dollar change everyday from the CENTRAL BANK
+    static async getDollarChange() {
         const response = await fetch("https://tipodecambio.paginasweb.cr/api/");
         return response.json();
     }
