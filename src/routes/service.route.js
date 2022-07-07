@@ -16,7 +16,7 @@ ServiceRouter
         try {
             if (ServiceData) {
                 const newService = await ServiceService.addService(ServiceData);
-                res.JSON(newService);
+                res.send(newService);
             }
         } catch (err) {
             next(err);
