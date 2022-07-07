@@ -27,7 +27,7 @@ class ServiceService {
         }
         const movementResponse = await AccountMovementService.addAccountMovement(movement);
         if (movementResponse === "Error on service: there are not enough funds on the account." || movementResponse === "Error on transfer: there are not enough funds on the account.") {
-            return movementResponse
+            return movementResponse;
         } else {
             const service = new Service(ServiceData);
             await service.save();
