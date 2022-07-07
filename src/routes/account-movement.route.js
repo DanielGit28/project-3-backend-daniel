@@ -29,7 +29,7 @@ AccountMovementRouter
     .route("/accounts/:originAccount")
     // Get single AccountMovement
     .get(async (req, res) => {
-        const AccountMovementOriginAccount = req.params.user;
+        const AccountMovementOriginAccount = req.params.originAccount;
         const AccountMovements = await AccountMovementService.getAccountMovementsByOriginAccount(AccountMovementOriginAccount);
         !AccountMovements ? res.sendStatus(404) : res.json(AccountMovements);
     })
@@ -38,8 +38,18 @@ AccountMovementRouter
     .route("/accounts/:destinationAccount")
     // Get account movements
     .get(async (req, res) => {
-        const AccountMovementDestAccount = req.params.user;
+        const AccountMovementDestAccount = req.params.destinationAccount;
         const AccountMovements = await AccountMovementService.getAccountMovementByDestinationAccount(AccountMovementDestAccount);
+        !AccountMovements ? res.sendStatus(404) : res.json(AccountMovements);
+    })
+
+//Get movements by user
+AccountMovementRouter
+    .route("/user/:user")
+    // Get account movements
+    .get(async (req, res) => {
+        const user = req.params.user;
+        const AccountMovements = await AccountMovementService.getAccountMovementsByUser(user);
         !AccountMovements ? res.sendStatus(404) : res.json(AccountMovements);
     })
 

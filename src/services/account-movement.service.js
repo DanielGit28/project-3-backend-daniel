@@ -13,6 +13,10 @@ class AccountMovementService {
         const accountMovement = await AccountMovement.findById(id);
         return accountMovement;
     }
+    static async getAccountMovementsByUser(user) {
+        const accountMovement = await AccountMovement.find({ user: user });
+        return accountMovement;
+    }
 
     static async getAccountMovementsByOriginAccount(originAccount) {
         const accountMovement = await AccountMovement.find({ originAccount: originAccount });
