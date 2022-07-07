@@ -40,6 +40,15 @@ const accountMovementSchema = new mongoose.Schema({
     movementDate: {
         type: Date,
         default: Date.now
+    },
+    user: {
+        type: String, validate: {
+            validator: function (email) {
+                return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email);
+            },
+            message: props => `${props.value} is not a valid user email for the service!`
+        },
+        required: [true, "User email required for service"]
     }
 
 });

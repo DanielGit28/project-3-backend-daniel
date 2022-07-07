@@ -23,7 +23,8 @@ class ServiceService {
             originAccount: ServiceData.bankAccount,
             currency: ServiceData.currency,
             amount: ServiceData.amount,
-            movementType: "Service"
+            movementType: "Service",
+            user: ServiceData.user
         }
         const movementResponse = await AccountMovementService.addAccountMovement(movement);
         if (movementResponse === "Error on service: there are not enough funds on the account." || movementResponse === "Error on transfer: there are not enough funds on the account.") {
