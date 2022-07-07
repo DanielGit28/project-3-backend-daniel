@@ -23,7 +23,7 @@ const serviceSchema = new mongoose.Schema({
     },
     serviceType: {
         type: String,
-        enum: ["Electricity", "Water", "Phone","Internet", "Car insurance","Work insurance","Healt insurance", "Annual driving permit"],
+        enum: ["Electricity", "Water", "Phone","Internet", "Car insurance","Work insurance","Health insurance", "Annual driving permit"],
         default: "Electricity",
         message: "{VALUE} for service is not supported",
         required: [true, "Service type required"]
